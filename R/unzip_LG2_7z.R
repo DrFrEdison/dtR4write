@@ -46,7 +46,13 @@ unzip.LG2.7z <- function(date = NA
     # Filter date ####
     if(!is.na(date)){
       ref.drk.spc.files.date <- ref.drk.spc.files.date[grep(date,ref.drk.spc.files.date)]
+
+      zip.files <- zip.files[grep(date,zip.files.date)]
       zip.files.date <- zip.files.date[grep(date,zip.files.date)]
+
+      csv.files <- csv.files[ grep(date, csv.files.date) ]
+      csv.files.date <- csv.files.date[ grep(date, csv.files.date) ]
+
     }
 
     zip.files.date <- sort(zip.files.date)
@@ -75,6 +81,15 @@ unzip.LG2.7z <- function(date = NA
 
       zip.files.to.check <- zip.files.to.check[ which( unlist( zip.files.nrow ) != unlist( spc.files.nrow )) ]
       spc.files.to.check <- spc.files.to.check[ which( unlist( zip.files.nrow ) != unlist( spc.files.nrow )) ]
+    }
+
+    # Stop when all files are already processed ####
+    if( all(is.na(unique(zip.files.date))) ){message(paste0("No new files found for ",
+                                                            as.character(customerlist$customer[o])," ",
+                                                            as.character(customerlist$location[o])," ",
+                                                            as.character(customerlist$line[o])))
+      setwd(csv.dir)
+      next
     }
 
     # Check if files are already existing ####
@@ -465,3 +480,11 @@ unzip.LG2.7z <- function(date = NA
     message("finished")
   }
 }
+
+# debug(unzip.LG2.7z)
+# unzip.LG2.7z(date = dt$date
+#              , line = NA
+#              , unzip.dir = "C:/csvtemp"
+#              , dir_wd = wd
+#              , customerlist = dt_customer[ dt_customer$customer != "Roche" , ])
+# undebug(unzip.LG2.7z)
