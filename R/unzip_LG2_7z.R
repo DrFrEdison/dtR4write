@@ -25,6 +25,7 @@ unzip.LG2.7z <- function(date = NA
     spc.dir <- paste0(service_backup_path(as.character(customerlist[o,]$customer), as.character(customerlist[o,]$location), as.character(customerlist[o,]$line), dir_wd = dir_wd), "spc/")
 
     # List zip.files ####
+    message(zip.dir)
     setwd(zip.dir)
     zip.files <- dir(pattern = ".zip$")
     zip.files.date <- substr(zip.files,1,10)
@@ -453,7 +454,7 @@ unzip.LG2.7z <- function(date = NA
                         , as.character( unlist( customerlist[o,"line"])), "_spc.csv")
                , sep = ";", dec = ",")
       }
-      message(paste(gsub(".zip","",unlist(zip.files)[j]),"for",as.character(customerlist$customer[o]),as.character(customerlist$location[o]),as.character(customerlist$line[o]),"completed, time =",Sys.time(),length(zip.files)-j,"to go"))
+      message(paste(gsub(".zip","",unlist(zip.files)[j]),"for",as.character(customerlist$customer[o]),as.character(customerlist$location[o]),as.character(customerlist$line[o]),"completed, time =",substr(Sys.time(), 1, 19),length(zip.files)-j,"to go"))
 
     }
 
