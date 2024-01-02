@@ -138,9 +138,7 @@ LG3_transform_SQL_update_to_csv <- function(csv_file,
           reftomerge$date <- as.Date(reftomerge$date)
           # attr(reftomerge$datetime, "tzone") <- "Europe/Berlin"
 
-          ifelse(length(unique(names(reftomerge)!=names(reftoexport)))>1,
-                 refmerged <- rbindlist(list(reftomerge,reftoexport), fill = T),
-                 refmerged <- rbindlist(list(reftomerge,reftoexport)))
+          refmerged <- rbindlist(list(reftomerge,reftoexport), fill = T)
 
           refmerged <- refmerged[order(refmerged$datetime),]
           refmerged <- refmerged[which(!duplicated(refmerged$datetime)),]
@@ -170,9 +168,7 @@ LG3_transform_SQL_update_to_csv <- function(csv_file,
           drktomerge$date <- as.Date(drktomerge$date)
           # attr(drktomerge$datetime, "tzone") <- "Europe/Berlin"
 
-          ifelse(length(unique(names(drktomerge)!=names(drktoexport)))>1,
-                 drkmerged <- rbindlist(list(drktomerge,drktoexport), fill = T),
-                 drkmerged <- rbindlist(list(drktomerge,drktoexport)))
+          drkmerged <- rbindlist(list(drktomerge,drktoexport), fill = T)
 
           drkmerged <- drkmerged[order(drkmerged$datetime),]
           drkmerged <- drkmerged[which(!duplicated(drkmerged$datetime)),]
@@ -207,9 +203,7 @@ LG3_transform_SQL_update_to_csv <- function(csv_file,
           spctomerge$date <- as.Date(spctomerge$date)
           # attr(spctomerge$datetime, "tzone") <- "Europe/Berlin"
 
-          ifelse(length(unique(names(spctomerge)!=names(spctoexport)))>1,
-                 spcmerged <- rbindlist(list(spctomerge,spctoexport), fill = T),
-                 spcmerged <- rbindlist(list(spctomerge,spctoexport)))
+          spcmerged <- rbindlist(list(spctomerge,spctoexport), fill = T)
 
           spcmerged <- spcmerged[order(spcmerged$datetime),]
           spcmerged <- spcmerged[which(!duplicated(spcmerged$datetime)),]
