@@ -71,10 +71,20 @@ produkt_per_day_year <- function(customer, location, line, LG, year, date_file =
                                                                                              , DTProductNumber = as.numeric( unlist( unique(filep$trans[ , c("DTproductNumber", "MixerNumber"), with = F])[ , 1]))
                                                                                              , MixerNumber = unique(filep$trans[ , c("DTproductNumber", "MixerNumber"), with = F])[ , 2])
 
-
-
         for(o in 1 : nrow( filep$export)) if(any(filep$DTProductNumber$DTProductNumber %in% filep$export$DTProductNumber[ o ]))  filep$export$Produktname[ o ] <- filep$DTProductNumber$Produktname[ filep$DTProductNumber$DTProductNumber %in% filep$export$DTProductNumber[ o ] ]
 
+      }
+
+      if(LG == "2"){
+
+        filep$export <- data.frame(date = as.character( unique( filep$trans[ , grep("^date$", names(filep$trans), ignore.case = T), with = F]$date))
+                                   , MixerNumber = as.numeric( unlist( unique(filep$trans[ , grep("Produktnummer", names(filep$trans)), with = F]))))
+      }
+
+      if(LG == "SG"){
+
+        filep$export <- data.frame(date = as.character( unique( filep$trans[ , grep("^date$", names(filep$trans), ignore.case = T), with = F]$date))
+                                   , MixerNumber = as.character( unlist( unique(filep$trans[ , grep("Produkt", names(filep$trans)), with = F]))))
       }
 
       # # new MixerID or DTProductNumber ? ----
