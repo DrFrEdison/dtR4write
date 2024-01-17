@@ -1,7 +1,8 @@
 Package: dtR4write
 Type: Package
 Title: R for Dausch Technologies GmbH - Write / Plot data to server and for service tasks
-Version: 0.1.1
+Version: 0.1.2
+VersionName: A
 Author: Markus Kurtz
 Maintainer: Markus Kurtz <m.kurtz@dausch-technologies.de>
 Description: Write data to ServiceBackup and to C:/csvtemp (or somewhere else definded) for service and method development tasks.

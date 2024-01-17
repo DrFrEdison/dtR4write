@@ -78,7 +78,8 @@ unzip.LG2.7z <- function(date = NA
       zip.files.nrow <- lapply(zip.files.to.check, function( x ) zip::zip_list( paste0(zip.dir, x)))
       zip.files.nrow <- lapply(zip.files.nrow, function( x ) length(x$filename[ grep("-M.log", x$filename)]))
 
-      spc.files.nrow <- lapply(spc.files.to.check, function( x ) read.table( pipe( paste0("wc -l ", paste0( spc.dir, x))))[[ 1 ]] - 1)
+      spc.files.nrow <- lapply(spc.files.to.check, function( x ) read.table( pipe( paste0("wc -l ", paste0( spc.dir, x))))[[ 1 ]])
+      spc.files.nrow <- lapply(spc.files.nrow, function( x ) as.numeric(x) - 1)
 
       zip.files.to.check <- zip.files.to.check[ which( unlist( zip.files.nrow ) != unlist( spc.files.nrow )) ]
       spc.files.to.check <- spc.files.to.check[ which( unlist( zip.files.nrow ) != unlist( spc.files.nrow )) ]
@@ -189,7 +190,7 @@ unzip.LG2.7z <- function(date = NA
       ref$dat <- lapply(ref$dat,function(x) x[1:(which(x$V1=="Spektrum")-1),])
 
       zerotime <- which(do.call(rbind,lapply(ref$dat,function(x) ifelse(length(grep("00-00-00",x[1,2]))==0,0,1)))==1)
-      ref$date <- lapply(ref$dat, function(x) as.POSIXct(as.character(x[1,2]),format="%Y-%m-%d_%H-%M-%S",tz="Europe/Berlin"))
+      ref$date <- lapply(ref$dat, function(x) as.POSIXct(as.character(x[1,2]),format="%Y-%m-%d_%H-%M-%S",tz="UTC"))
 
       if(length(zerotime)>0){
         for(i in 1:length(zerotime))
@@ -248,7 +249,7 @@ unzip.LG2.7z <- function(date = NA
         }
 
         ref$final <- data.table(datetime = do.call(rbind,lapply(ref$date,as.character))
-                                , date = as.Date.character(do.call(rbind,lapply(ref$date,as.character)),tz="Europe/Berlin",format="%Y-%m-%d")
+                                , date = as.Date.character(do.call(rbind,lapply(ref$date,as.character)),tz="UTC",format="%Y-%m-%d")
                                 , time = substr(do.call(rbind,lapply(ref$date,as.character)),12,19)
                                 , rbindlist(ref$dat, fill = T)
                                 , do.call(rbind, ref$spc))
@@ -286,7 +287,7 @@ unzip.LG2.7z <- function(date = NA
       drk$dat <- lapply(drk$dat,function(x) x[1:(which(x$V1=="Spektrum")-1),])
 
       zerotime <- which(do.call(rbind,lapply(drk$dat,function(x) ifelse(length(grep("00-00-00",x[1,2]))==0,0,1)))==1)
-      drk$date <- lapply(drk$dat, function(x) as.POSIXct(as.character(x[1,2]),format="%Y-%m-%d_%H-%M-%S",tz="Europe/Berlin"))
+      drk$date <- lapply(drk$dat, function(x) as.POSIXct(as.character(x[1,2]),format="%Y-%m-%d_%H-%M-%S",tz="UTC"))
 
       if(length(zerotime)>0){
         for(i in 1:length(zerotime))
@@ -345,7 +346,7 @@ unzip.LG2.7z <- function(date = NA
         }
 
         drk$final <- data.table(datetime = do.call(rbind,lapply(drk$date,as.character))
-                                , date = as.Date.character(do.call(rbind,lapply(drk$date,as.character)),tz="Europe/Berlin",format="%Y-%m-%d")
+                                , date = as.Date.character(do.call(rbind,lapply(drk$date,as.character)),tz="UTC",format="%Y-%m-%d")
                                 , time = substr(do.call(rbind,lapply(drk$date,as.character)),12,19)
                                 , rbindlist(drk$dat, fill = T)
                                 , do.call(rbind, drk$spc))
@@ -380,7 +381,7 @@ unzip.LG2.7z <- function(date = NA
       spc$dat <- lapply(spc$dat,function(x) x[1:(which(x$V1=="Spektrum")-1),])
 
       zerotime <- which(do.call(rbind,lapply(spc$dat,function(x) ifelse(length(grep("00-00-00",x[1,2]))==0,0,1)))==1)
-      spc$date <- lapply(spc$dat, function(x) as.POSIXct(as.character(x[1,2]),format="%Y-%m-%d_%H-%M-%S",tz="Europe/Berlin"))
+      spc$date <- lapply(spc$dat, function(x) as.POSIXct(as.character(x[1,2]),format="%Y-%m-%d_%H-%M-%S",tz="UTC"))
 
       if(length(zerotime)>0){
         for(i in 1:length(zerotime))
@@ -437,7 +438,7 @@ unzip.LG2.7z <- function(date = NA
         }
 
         spc$final <- data.table(datetime = do.call(rbind,lapply(spc$date,as.character))
-                                , date = as.Date.character(do.call(rbind,lapply(spc$date,as.character)),tz="Europe/Berlin",format="%Y-%m-%d")
+                                , date = as.Date.character(do.call(rbind,lapply(spc$date,as.character)),tz="UTC",format="%Y-%m-%d")
                                 , time = substr(do.call(rbind,lapply(spc$date,as.character)),12,19)
                                 , rbindlist(spc$dat, fill = T)
                                 , do.call(rbind, spc$spc))
