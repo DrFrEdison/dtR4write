@@ -33,8 +33,8 @@ produkt_per_day_year <- function(customer, location, line, LG, year, date_file =
 
       filep$trans <- data.table::fread(filep$files[j])
 
-      if(length( unique( filep$trans[ , get("date")]))>1) message("More than one date in csv file")
-      if(length(unique( filep$trans[ , get("date")]))>1) break
+      if( filep$trans[ , length(unique(get("date")))] > 1) message("More than one date in csv file")
+      if( filep$trans[ , length(unique(get("date")))] > 1) break
 
       if(LG != "3" & LG != "SG3") if(length(unique(filep$trans[ , grep("Produkt", names(filep$trans)), with = F])) == 0) next
       if(LG != "3" & LG != "SG3"){
@@ -77,13 +77,13 @@ produkt_per_day_year <- function(customer, location, line, LG, year, date_file =
 
       if(LG == "2"){
 
-        filep$export <- data.frame(date = as.character( unique( filep$trans[ , get("date")]))
+        filep$export <- data.frame(date = filep$trans[ , as.character( unique( get("date")))]
                                    , MixerNumber = as.numeric( unlist( unique(filep$trans[ , grep("Produktnummer", names(filep$trans)), with = F]))))
       }
 
       if(LG == "SG"){
 
-        filep$export <- data.frame(date = as.character( unique( filep$trans[ , get("date")]))
+        filep$export <- data.frame(date = filep$trans[ , as.character( unique( get("date")))]
                                    , MixerNumber = as.character( unlist( unique(filep$trans[ , grep("Produkt", names(filep$trans)), with = F]))))
       }
 

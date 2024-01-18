@@ -476,7 +476,7 @@ unzip.LG2.7z <- function(date = NA
                            , line = customerlist$line[o]
                            , LG = "2"
                            , year = year( i )
-                           , date = i
+                           , date_file = i
                            , dir_wd = dir_wd)
     }
     message("finished")
