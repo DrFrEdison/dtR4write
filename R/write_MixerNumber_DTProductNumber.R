@@ -77,8 +77,14 @@ produkt_per_day_year <- function(customer, location, line, LG, year, date_file =
 
       if(LG == "2"){
 
-        filep$export <- data.frame(date = as.character( unique( filep$trans$date))
-                                   , MixerNumber = as.numeric( unlist( unique(filep$trans[ , grep("Produktnummer", names(filep$trans)), with = F]))))
+        if( length( grep("Produktnummer", names(filep$trans)) ) > 0 )
+          filep$export <- data.frame(date = as.character( unique( filep$trans$date))
+                                     , MixerNumber = as.numeric( unlist( unique(filep$trans[ , grep("Produktnummer", names(filep$trans)), with = F])))) else{
+
+                                       filep$export <- data.frame(date = as.character( unique( filep$trans$date))
+                                                                  , MixerNumber = as.numeric( unlist( unique(filep$trans[ , grep("Produkt", names(filep$trans)), with = F]))))
+
+                                     }
       }
 
       if(LG == "SG"){
